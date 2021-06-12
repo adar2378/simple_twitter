@@ -7,14 +7,14 @@ class AuthException implements Exception {
 }
 
 class AuthenticationRepository {
-  AuthenticationRepository(this.firebaseAuth);
-  final FirebaseAuth firebaseAuth;
+  AuthenticationRepository(this._firebaseAuth);
+  final FirebaseAuth _firebaseAuth;
 
   Future<User> register(String email, String password) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
+      await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      final user = firebaseAuth.currentUser;
+      final user = _firebaseAuth.currentUser;
       if (user != null)
         return user;
       else
@@ -28,10 +28,10 @@ class AuthenticationRepository {
 
   Future<User> login(String email, String password) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
+      await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
 
-      final user = firebaseAuth.currentUser;
+      final user = _firebaseAuth.currentUser;
       if (user != null)
         return user;
       else
@@ -44,7 +44,7 @@ class AuthenticationRepository {
   }
 
   bool isLoggedIn() {
-    final currentUser = firebaseAuth.currentUser;
+    final currentUser = _firebaseAuth.currentUser;
     return currentUser == null;
   }
 
