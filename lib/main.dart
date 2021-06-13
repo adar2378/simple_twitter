@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:twitterapp/blocs/auth_bloc/authentication_bloc.dart';
 import 'package:twitterapp/repositories/tweets/tweets_repository.dart';
 
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
           ),
           routerDelegate: _appRouter.delegate(),
           routeInformationParser: _appRouter.defaultRouteParser(),
+          builder: EasyLoading.init(),
         ),
       ),
     );

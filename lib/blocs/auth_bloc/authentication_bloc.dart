@@ -17,44 +17,41 @@ class AuthenticationBloc
   Stream<AuthenticationState> mapEventToState(
     AuthenticationEvent event,
   ) async* {
+    print(event.toString());
     if (event is AuthenticationLogin) {
-      _login(event);
+      yield* _login(event);
     } else if (event is AuthenticationRegister) {
-      _register(event);
+      yield* _register(event);
     }
   }
 
   Stream<AuthenticationState> _login(AuthenticationLogin event) async* {
-    emit(AuthenticationLoading());
+    yield AuthenticationLoading();
     try {
       final user =
           await _authenticationRepository.login(event.email, event.password);
-      emit(AuthenticationSuccess(user));
+      yield AuthenticationSuccess(user);
     } catch (e) {
       String? errorMessage;
       if (e is AuthException) {
         errorMessage = e.message;
       }
-      emit(
-        AuthenticationFailure(errorMessage ?? 'Failed to authenticate!'),
-      );
+      yield AuthenticationFailure(errorMessage ?? 'Failed to authenticate!');
     }
   }
 
   Stream<AuthenticationState> _register(AuthenticationRegister event) async* {
-    emit(AuthenticationLoading());
+    yield (AuthenticationLoading());
     try {
       final user =
           await _authenticationRepository.register(event.email, event.password);
-      emit(AuthenticationSuccess(user));
+      yield (AuthenticationSuccess(user));
     } catch (e) {
       String? errorMessage;
       if (e is AuthException) {
         errorMessage = e.message;
       }
-      emit(
-        AuthenticationFailure(errorMessage ?? 'Failed to register!'),
-      );
+      yield (AuthenticationFailure(errorMessage ?? 'Failed to register!'));
     }
   }
 }

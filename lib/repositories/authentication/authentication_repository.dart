@@ -59,7 +59,7 @@ class AuthenticationRepository {
         authException.code == 'credential-already-in-use') {
       return 'This email is already in use with other user.';
     } else {
-      return 'Something went wrong!';
+      return authException.message ?? 'Something went wrong!';
     }
   }
 }

@@ -26,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = BlocProvider.of<AuthenticationBloc>(context);
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, listenState) {
         if (listenState is AuthenticationLoading) {
@@ -64,6 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(labelText: 'Password'),
+                    validator: MultiValidator([
+                      RequiredValidator(errorText: 'This field is required'),
+                      MinLengthValidator(6,
+                          errorText: 'This field must be 6 character long'),
+                    ]),
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -73,7 +79,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                   ),
                   SizedBox(height: 8),
-                  ElevatedButton(onPressed: () {}, child: Text('Login')),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState != null &&
+                            _formKey.currentState!.validate()) {
+                          authBloc.add(
+                            AuthenticationLogin(_emailController.value.text,
+                                _passwordController.value.text),
+                          );
+                        }
+                      },
+                      child: Text('Login')),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
