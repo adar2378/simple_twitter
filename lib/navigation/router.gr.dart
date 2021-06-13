@@ -7,6 +7,9 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
+import '../screens/authentication/login_screen.dart' as _i5;
+import '../screens/authentication/registration_screen.dart' as _i4;
+import '../screens/home/home_screen.dart' as _i6;
 import '../screens/splash_screen.dart' as _i3;
 
 class AppRouter extends _i1.RootStackRouter {
@@ -19,16 +22,54 @@ class AppRouter extends _i1.RootStackRouter {
         routeData: routeData,
         builder: (_) {
           return const _i3.SplashScreen();
+        }),
+    RegistrationScreenRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i4.RegistrationScreen();
+        }),
+    LoginScreenRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i5.LoginScreen();
+        }),
+    HomeScreenRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i6.HomeScreen();
         })
   };
 
   @override
-  List<_i1.RouteConfig> get routes =>
-      [_i1.RouteConfig(SplashScreenRoute.name, path: '/')];
+  List<_i1.RouteConfig> get routes => [
+        _i1.RouteConfig(SplashScreenRoute.name, path: '/'),
+        _i1.RouteConfig(RegistrationScreenRoute.name,
+            path: '/registration-screen'),
+        _i1.RouteConfig(LoginScreenRoute.name, path: '/login-screen'),
+        _i1.RouteConfig(HomeScreenRoute.name, path: '/home-screen')
+      ];
 }
 
 class SplashScreenRoute extends _i1.PageRouteInfo {
   const SplashScreenRoute() : super(name, path: '/');
 
   static const String name = 'SplashScreenRoute';
+}
+
+class RegistrationScreenRoute extends _i1.PageRouteInfo {
+  const RegistrationScreenRoute() : super(name, path: '/registration-screen');
+
+  static const String name = 'RegistrationScreenRoute';
+}
+
+class LoginScreenRoute extends _i1.PageRouteInfo {
+  const LoginScreenRoute() : super(name, path: '/login-screen');
+
+  static const String name = 'LoginScreenRoute';
+}
+
+class HomeScreenRoute extends _i1.PageRouteInfo {
+  const HomeScreenRoute() : super(name, path: '/home-screen');
+
+  static const String name = 'HomeScreenRoute';
 }
