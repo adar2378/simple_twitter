@@ -45,7 +45,7 @@ class AuthenticationRepository {
 
   bool isLoggedIn() {
     final currentUser = _firebaseAuth.currentUser;
-    return currentUser == null;
+    return currentUser != null;
   }
 
   String _handleFirebaseException(FirebaseAuthException authException) {

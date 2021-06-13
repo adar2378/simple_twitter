@@ -17,9 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final authRepo = context.read<AuthenticationRepository>();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       if (authRepo.isLoggedIn()) {
-        context.router.replaceNamed(HomeScreenRoute.name);
+        context.router.replace(HomeScreenRoute());
       } else {
-        context.router.replaceNamed(LoginScreenRoute.name);
+        context.router.replace(LoginScreenRoute());
       }
     });
     super.initState();
