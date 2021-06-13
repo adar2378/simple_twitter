@@ -11,10 +11,11 @@ class TweetRepository {
   TweetRepository(this._firebaseFirestore);
   final FirebaseFirestore _firebaseFirestore;
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getTweetsStream() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getTweetsStream(String userId) {
     try {
       final stream = _firebaseFirestore
           .collection('tweets')
+          .where('userId', isEqualTo: userId)
           .orderBy('dateCreated', descending: true)
           .snapshots();
       return stream;
