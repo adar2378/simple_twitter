@@ -29,6 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
     final authBloc = BlocProvider.of<AuthenticationBloc>(context);
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, listenState) {
+        if (EasyLoading.isShow) {
+          EasyLoading.dismiss();
+        }
         if (listenState is AuthenticationLoading) {
           EasyLoading.show(status: 'Loading...');
         } else if (listenState is AuthenticationSuccess) {
@@ -94,7 +97,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Don\'t have an account? '),
-                      TextButton(onPressed: () {}, child: Text('Create one'))
+                      TextButton(
+                          onPressed: () {
+                            context.router.push(
+                              RegistrationScreenRoute(),
+                            );
+                          },
+                          child: Text('Create one'))
                     ],
                   ),
                 ],
