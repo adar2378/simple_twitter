@@ -7,24 +7,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import 'package:twitterapp/main.dart';
+import 'package:twitterapp/repositories/authentication/authentication_repository.dart';
+import 'package:twitterapp/repositories/tweets/tweets_repository.dart';
+
+class MockAuthenticationRepository extends Mock
+    implements AuthenticationRepository {}
+
+class MockTweetRepository extends Mock implements TweetRepository {}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('App loads with appBarTheme', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    // await tester.pumpWidget(MyApp());
-
+    await tester.pumpWidget(MyApp(
+      authenticationRepository: MockAuthenticationRepository(),
+      tweetRepository: MockTweetRepository(),
+    ));
+    final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
     // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(
+      materialApp.theme!.appBarTheme.backgroundColor,
+      equals(Colors.transparent),
+    );
   });
 }
