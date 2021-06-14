@@ -18,61 +18,55 @@ class TweetBloc extends Bloc<TweetEvent, TweetState> {
     TweetEvent event,
   ) async* {
     if (event is TweetAdd) {
-      _addTweet(event);
+      yield* _addTweet(event);
     } else if (event is TweetEdit) {
-      _editTweet(event);
+      yield* _editTweet(event);
     } else if (event is TweetDelete) {
-      _deleteTweet(event);
+      yield* _deleteTweet(event);
     }
   }
 
   Stream<TweetState> _addTweet(TweetAdd event) async* {
-    emit(TweetActionLoading());
+    yield (TweetActionLoading());
     try {
       await _tweetRepository.addTweet(event.tweet);
-      emit(TweetActionSuccess());
+      yield (TweetActionSuccess());
     } catch (e) {
       String? errorMessage;
       if (e is TweetException) {
         errorMessage = e.message;
       }
-      emit(
-        TweetActionFailure(errorMessage ?? 'Failed to add a new tweet!'),
-      );
+      yield (TweetActionFailure(errorMessage ?? 'Failed to add a new tweet!'));
     }
   }
 
   Stream<TweetState> _editTweet(TweetEdit event) async* {
-    emit(TweetActionLoading());
+    yield (TweetActionLoading());
     try {
       await _tweetRepository.editTweet(event.tweet);
-      emit(TweetActionSuccess());
+      yield (TweetActionSuccess());
     } catch (e) {
       String? errorMessage;
       if (e is TweetException) {
         errorMessage = e.message;
       }
-      emit(
-        TweetActionFailure(
-            errorMessage ?? 'Failed to edit the tweet ${event.tweet.id}!'),
-      );
+      yield (TweetActionFailure(
+          errorMessage ?? 'Failed to edit the tweet ${event.tweet.id}!'));
     }
   }
 
   Stream<TweetState> _deleteTweet(TweetDelete event) async* {
-    emit(TweetActionLoading());
+    yield (TweetActionLoading());
     try {
       await _tweetRepository.deleteTweet(event.id);
-      emit(TweetActionSuccess());
+      yield (TweetActionSuccess());
     } catch (e) {
       String? errorMessage;
       if (e is TweetException) {
         errorMessage = e.message;
       }
-      emit(
-        TweetActionFailure(
-            errorMessage ?? 'Failed to delete the tweet ${event.id}!'),
-      );
+      yield (TweetActionFailure(
+          errorMessage ?? 'Failed to delete the tweet ${event.id}!'));
     }
   }
 }
