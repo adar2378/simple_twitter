@@ -53,6 +53,10 @@ class AuthenticationRepository {
     return currentUser;
   }
 
+  Future<void> logout() async {
+    await _firebaseAuth.signOut();
+  }
+
   String _handleFirebaseException(FirebaseAuthException authException) {
     if (authException.code == 'user-not-found') {
       return 'User with this email does not exist.';
