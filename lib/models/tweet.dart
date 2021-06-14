@@ -5,7 +5,7 @@ class Tweet {
     return Tweet(
       id: map['id'],
       text: map['text'],
-      dateCreated: DateTime.fromMillisecondsSinceEpoch(map['dateCreated']),
+      dateCreated: DateTime.parse(map['dateCreated']),
       userId: map['userId'],
     );
   }

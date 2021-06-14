@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (snapshots.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   }
-                  if (!snapshots.hasData) {
+                  if (snapshots.data == null) {
                     return const Text('Your feed is empty');
                   }
                   final items = snapshots.data!.docs;
@@ -81,7 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   return ListView.separated(
                     itemBuilder: (context, index) {
-                      return ListTile();
+                      return ListTile(
+                        title: Text(tweets[index].text ?? ''),
+                      );
                     },
                     separatorBuilder: (context, index) => Divider(),
                     itemCount: tweets.length,
