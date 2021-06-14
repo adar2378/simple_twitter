@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:twitterapp/helpers/datetime_formatter.dart';
 import 'package:twitterapp/models/tweet.dart';
 import 'package:twitterapp/navigation/router.gr.dart';
 import 'package:twitterapp/repositories/authentication/authentication_repository.dart';
@@ -81,8 +82,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   return ListView.separated(
                     itemBuilder: (context, index) {
+                      final currentTweet = tweets[index];
                       return ListTile(
-                        title: Text(tweets[index].text ?? ''),
+                        contentPadding: EdgeInsets.only(
+                          left: 16,
+                        ),
+                        title: Text(
+                          currentTweet.dateCreated == null
+                              ? ''
+                              : DateTimeFormatter.formatDateTime(
+                                  currentTweet.dateCreated!,
+                                ),
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                        subtitle: Text(
+                          currentTweet.text ?? '',
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        trailing: PopupMenuButton(
+                          itemBuilder: (context) {
+                            final list = <PopupMenuEntry>[
+                              PopupMenuItem(child: Text('Edit')),
+                              PopupMenuItem(child: Text('Delete')),
+                            ];
+                            return list;
+                          },
+                        ),
                       );
                     },
                     separatorBuilder: (context, index) => Divider(),
