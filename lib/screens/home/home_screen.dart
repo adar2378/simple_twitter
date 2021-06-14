@@ -74,9 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   final tweets = List<Tweet>.from(
                     items.map(
-                      (x) => Tweet.fromMap(
-                        (x.data() as Map<String, dynamic>),
-                      ),
+                      (x) {
+                        var map = (x.data() as Map<String, dynamic>);
+                        map['id'] = x.id;
+                        return Tweet.fromMap(map);
+                      },
                     ),
                   );
 
@@ -100,10 +102,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                         trailing: PopupMenuButton(
+                          onSelected: (selectedValue) {
+                            if (selectedValue == 'edit') {}
+                          },
                           itemBuilder: (context) {
-                            final list = <PopupMenuEntry>[
-                              PopupMenuItem(child: Text('Edit')),
-                              PopupMenuItem(child: Text('Delete')),
+                            final list = <PopupMenuEntry<String>>[
+                              PopupMenuItem<String>(
+                                child: Text('Edit'),
+                                value: 'edit',
+                              ),
+                              PopupMenuItem<String>(
+                                child: Text('Delete'),
+                                value: 'delete',
+                              ),
                             ];
                             return list;
                           },
