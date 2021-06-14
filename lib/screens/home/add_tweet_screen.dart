@@ -58,39 +58,44 @@ class _AddTweetScreenState extends State<AddTweetScreen> {
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _tweetTextController,
-                maxLines: 4,
-                maxLength: 280,
-                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                validator:
-                    RequiredValidator(errorText: 'This field is required!'),
-                decoration: InputDecoration(
-                  hintText: 'Type your tweet here...',
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _tweetTextController,
+                  maxLines: 4,
+                  maxLength: 280,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  validator:
+                      RequiredValidator(errorText: 'This field is required!'),
+                  decoration: InputDecoration(
+                    hintText: 'Type your tweet here...',
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  final user =
-                      RepositoryProvider.of<AuthenticationRepository>(context)
-                          .getCurrentUser();
-                  if (user == null) {
-                    EasyLoading.showError('User not found');
-                  } else if (_formKey.currentState != null &&
-                      _formKey.currentState!.validate()) {
-                    final _tweet = Tweet(
-                      text: _tweetTextController.value.text,
-                      userId: user.uid,
-                      dateCreated: DateTime.now(),
-                    );
-                    tweetBloc.add(TweetAdd(_tweet));
-                  }
-                },
-                child: Text('Tweet'),
-              )
-            ],
+                ElevatedButton(
+                  onPressed: () {
+                    final user =
+                        RepositoryProvider.of<AuthenticationRepository>(context)
+                            .getCurrentUser();
+                    if (user == null) {
+                      EasyLoading.showError('User not found');
+                    } else if (_formKey.currentState != null &&
+                        _formKey.currentState!.validate()) {
+                      final _tweet = Tweet(
+                        id: '0',
+                        text: _tweetTextController.value.text,
+                        userId: user.uid,
+                        dateCreated: DateTime.now(),
+                      );
+                      print('twitting');
+                      tweetBloc.add(TweetAdd(_tweet));
+                    }
+                  },
+                  child: Text('Tweet'),
+                )
+              ],
+            ),
           ),
         ),
       ),

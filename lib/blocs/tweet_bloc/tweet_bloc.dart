@@ -31,7 +31,9 @@ class TweetBloc extends Bloc<TweetEvent, TweetState> {
     try {
       await _tweetRepository.addTweet(event.tweet);
       yield (TweetActionSuccess());
-    } catch (e) {
+    } catch (e, st) {
+      print(e);
+      print(st);
       String? errorMessage;
       if (e is TweetException) {
         errorMessage = e.message;

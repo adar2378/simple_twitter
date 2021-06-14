@@ -28,8 +28,10 @@ class TweetRepository {
     try {
       await _firebaseFirestore
           .collection('tweets')
-          .add(tweet.toMap().remove('id'));
+          .add(tweet.toMap()..remove('id'));
     } catch (e, st) {
+      print(e);
+      print(st);
       throw (TweetException('Error: $e, Stacktrace: $st'));
     }
   }
@@ -39,7 +41,7 @@ class TweetRepository {
       await _firebaseFirestore
           .collection('tweets')
           .doc(tweet.id)
-          .update(tweet.toMap().remove('id'));
+          .update(tweet.toMap()..remove('id'));
     } catch (e, st) {
       throw (TweetException('Error: $e, Stacktrace: $st'));
     }
