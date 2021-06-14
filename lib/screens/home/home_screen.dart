@@ -67,7 +67,36 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Logout?'),
+                    content: Text('You will be logged out from the app.'),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('No')),
+                      TextButton(
+                          onPressed: () async {
+                            try {
+                              await RepositoryProvider.of<
+                                      AuthenticationRepository>(context)
+                                  .logout();
+                              context.router.pushAndPopUntil(LoginScreenRoute(),
+                                  predicate: (route) => false);
+                            } catch (e) {
+                              EasyLoading.showError('Something went wrong!');
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text('Yes')),
+                    ],
+                  ),
+                );
+              },
               icon: Icon(Icons.power_settings_new),
             )
           ],
