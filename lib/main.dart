@@ -61,6 +61,13 @@ class MyApp extends StatelessWidget {
           title: 'Simple Twitter',
           theme: ThemeData(
             primarySwatch: Colors.blue,
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              iconTheme: IconThemeData(
+                color: Colors.black,
+              ),
+            ),
           ),
           routerDelegate: _appRouter.delegate(),
           routeInformationParser: _appRouter.defaultRouteParser(),
