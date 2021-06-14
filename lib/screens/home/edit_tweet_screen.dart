@@ -6,7 +6,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:twitterapp/blocs/tweet_bloc/tweet_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:twitterapp/models/tweet.dart';
-import 'package:twitterapp/repositories/authentication/authentication_repository.dart';
 import 'package:twitterapp/repositories/tweets/tweets_repository.dart';
 
 class EditTweetScreen extends StatefulWidget {

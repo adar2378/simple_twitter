@@ -103,7 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         trailing: PopupMenuButton(
                           onSelected: (selectedValue) {
-                            if (selectedValue == 'edit') {}
+                            if (selectedValue == 'edit') {
+                              context.router.push(
+                                  EditTweetScreenRoute(tweet: currentTweet));
+                            }
                           },
                           itemBuilder: (context) {
                             final list = <PopupMenuEntry<String>>[
