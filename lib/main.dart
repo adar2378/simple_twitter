@@ -67,6 +67,9 @@ class MyApp extends StatelessWidget {
               iconTheme: IconThemeData(
                 color: Colors.black,
               ),
+              titleTextStyle: TextStyle(
+                color: Colors.black,
+              ),
             ),
           ),
           routerDelegate: _appRouter.delegate(),
