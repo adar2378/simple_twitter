@@ -48,7 +48,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EasyLoading.instance..maskType = EasyLoadingMaskType.black;
+    EasyLoading.instance
+      ..maskType = EasyLoadingMaskType.black
+      ..displayDuration = Duration(
+        seconds: 3,
+      );
 
     return MultiRepositoryProvider(
       providers: [
