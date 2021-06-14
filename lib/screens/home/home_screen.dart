@@ -72,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   context: context,
                   builder: (context) => AlertDialog(
                     title: Text('Logout?'),
-                    content: Text('You will be logged out from the app.'),
+                    content: Text(
+                        '${RepositoryProvider.of<AuthenticationRepository>(context).getCurrentUser()?.email ?? 'You'} will be logged out from the app.'),
                     actions: [
                       TextButton(
                           onPressed: () {
