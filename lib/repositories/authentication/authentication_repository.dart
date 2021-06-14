@@ -48,6 +48,11 @@ class AuthenticationRepository {
     return currentUser != null;
   }
 
+  User? getCurrentUser() {
+    final currentUser = _firebaseAuth.currentUser;
+    return currentUser;
+  }
+
   String _handleFirebaseException(FirebaseAuthException authException) {
     if (authException.code == 'user-not-found') {
       return 'User with this email does not exist.';
